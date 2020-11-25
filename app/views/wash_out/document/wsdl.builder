@@ -1,5 +1,5 @@
 xml.instruct!
-xml[:wsdl].definitions 'xmlns:xsi'       => @namespace,
+xml.definitions 'xmlns:xsi'       => @namespace,
                        'xmlns:soap'      => 'http://schemas.xmlsoap.org/wsdl/soap/',
                        'xmlns:tm'        => 'http://microsoft.com/wsdl/mime/textMatching/',
                        'xmlns:soapenc'   => 'http://schemas.xmlsoap.org/soap/encoding/',
@@ -11,8 +11,8 @@ xml[:wsdl].definitions 'xmlns:xsi'       => @namespace,
                        'targetNamespace' => @namespace,
                        'xmlns:wsdl'      => 'http://schemas.xmlsoap.org/wsdl/' do
 
-  xml[:wsdl].types do
-    xml[:s].tag! "schema", :targetNamespace => @namespace, :xmlns => 'http://www.w3.org/2001/XMLSchema' do
+  xml.types do
+    xml.tag! "schema", :targetNamespace => @namespace, :xmlns => 'http://www.w3.org/2001/XMLSchema' do
       defined = []
       @map.each do |operation, formats|
         (formats[:in] + formats[:out]).each do |p|
@@ -23,12 +23,12 @@ xml[:wsdl].definitions 'xmlns:xsi'       => @namespace,
   end
 
   @map.each do |operation, formats|
-    xml[:wsdl].message :name => "#{operation}" do
+    xml.message :name => "#{operation}" do
       formats[:in].each do |p|
         xml.part wsdl_occurence(p, false, :name => p.name, :type => p.namespaced_type)
       end
     end
-    xml[:wsdl].message :name => formats[:response_tag] do
+    xml.message :name => formats[:response_tag] do
       formats[:out].each do |p|
         xml.part wsdl_occurence(p, false, :name => p.name, :type => p.namespaced_type)
       end
