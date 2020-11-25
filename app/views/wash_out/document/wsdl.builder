@@ -1,15 +1,18 @@
 xml.instruct!
-xml.definitions 'xmlns' => 'http://schemas.xmlsoap.org/wsdl/',
-                'xmlns:xsi' => @namespace,
-                'xmlns:soap' => 'http://schemas.xmlsoap.org/wsdl/soap/',
-                'xmlns:xsd' => 'http://www.w3.org/2001/XMLSchema',
-                'xmlns:soap-enc' => 'http://schemas.xmlsoap.org/soap/encoding/',
-                'xmlns:wsdl' => 'http://schemas.xmlsoap.org/wsdl/',
-                'name' => @name,
-                'targetNamespace' => @namespace do
+xml[:wsdl].definitions 'xmlns:xsi'       => @namespace,
+                       'xmlns:soap'      => 'http://schemas.xmlsoap.org/wsdl/soap/',
+                       'xmlns:tm'        => 'http://microsoft.com/wsdl/mime/textMatching/',
+                       'xmlns:soapenc'   => 'http://schemas.xmlsoap.org/soap/encoding/',
+                       'xmlns:mime'      => 'http://schemas.xmlsoap.org/wsdl/mime/',
+                       'xmlns:tns'       => 'http://www.epagoinc.com/biller-transaction-service/1.0',
+                       'xmlns:s'         => 'http://www.w3.org/2001/XMLSchema',
+                       'xmlns:soap12'    => 'http://schemas.xmlsoap.org/wsdl/soap12/',
+                       'xmlns:http'      => 'http://schemas.xmlsoap.org/wsdl/http/',
+                       'targetNamespace' => @namespace,
+                       'xmlns:wsdl'      => 'http://schemas.xmlsoap.org/wsdl/' do
 
-  xml.types do
-    xml.tag! "schema", :targetNamespace => @namespace, :xmlns => 'http://www.w3.org/2001/XMLSchema' do
+  xml[:wsdl].types do
+    xml[:s].tag! "schema", :targetNamespace => @namespace, :xmlns => 'http://www.w3.org/2001/XMLSchema' do
       defined = []
       @map.each do |operation, formats|
         (formats[:in] + formats[:out]).each do |p|
@@ -20,12 +23,12 @@ xml.definitions 'xmlns' => 'http://schemas.xmlsoap.org/wsdl/',
   end
 
   @map.each do |operation, formats|
-    xml.message :name => "#{operation}" do
+    xml[:wsdl].message :name => "#{operation}" do
       formats[:in].each do |p|
         xml.part wsdl_occurence(p, false, :name => p.name, :type => p.namespaced_type)
       end
     end
-    xml.message :name => formats[:response_tag] do
+    xml[:wsdl].message :name => formats[:response_tag] do
       formats[:out].each do |p|
         xml.part wsdl_occurence(p, false, :name => p.name, :type => p.namespaced_type)
       end
