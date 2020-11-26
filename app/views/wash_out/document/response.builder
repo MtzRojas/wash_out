@@ -9,7 +9,7 @@ xml.tag! "soap:Envelope", "xmlns:soap" => 'http://schemas.xmlsoap.org/soap/envel
           wsdl_data xml, header
         end
       else
-        xml.tag! "#{@response_tag.nil? ? 'tns:' : @response_tag}#{@action_spec[:response_tag]}", response_attribute_tags do
+        xml.tag! "#{@response_tag.nil? ? 'tns:' : @response_tag}#{@action_spec[:response_tag]}", @response_attribute_tags do
           wsdl_data xml, header
         end
       end
@@ -21,7 +21,7 @@ xml.tag! "soap:Envelope", "xmlns:soap" => 'http://schemas.xmlsoap.org/soap/envel
         wsdl_data xml, result
       end
     else
-      xml.tag! "#{@response_tag.nil? ? 'tns:' : @response_tag}#{@action_spec[:response_tag]}", response_attribute_tags do
+      xml.tag! "#{@response_tag.nil? ? 'tns:' : @response_tag}#{@action_spec[:response_tag]}", @response_attribute_tags do
         wsdl_data xml, result
       end
     end
