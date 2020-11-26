@@ -4,7 +4,7 @@ xml.tag! "soap:Envelope", "xmlns:soap" => 'http://schemas.xmlsoap.org/soap/envel
                           "xmlns:xsi" => @namespace do
   if !header.nil?
     xml.tag! "soap:Header" do
-      if response_attribute_tags.nil?
+      if @response_attribute_tags.nil?
         xml.tag! "#{@response_tag.nil? ? 'tns:' : @response_tag}#{@action_spec[:response_tag]}" do
           wsdl_data xml, header
         end
@@ -16,7 +16,7 @@ xml.tag! "soap:Envelope", "xmlns:soap" => 'http://schemas.xmlsoap.org/soap/envel
     end
   end
   xml.tag! "soap:Body" do
-    if response_attribute_tags.nil?
+    if @response_attribute_tags.nil?
       xml.tag! "#{@response_tag.nil? ? 'tns:' : @response_tag}#{@action_spec[:response_tag]}" do
         wsdl_data xml, result
       end
