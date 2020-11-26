@@ -12,6 +12,7 @@ xml.tag! "soap:Envelope", "xmlns:soap" => 'http://schemas.xmlsoap.org/soap/envel
         xml.tag! "#{@response_tag.nil? ? 'tns:' : @response_tag}#{@action_spec[:response_tag]}", response_attribute_tags do
           wsdl_data xml, header
         end
+      end
     end
   end
   xml.tag! "soap:Body" do
@@ -23,5 +24,6 @@ xml.tag! "soap:Envelope", "xmlns:soap" => 'http://schemas.xmlsoap.org/soap/envel
       xml.tag! "#{@response_tag.nil? ? 'tns:' : @response_tag}#{@action_spec[:response_tag]}", response_attribute_tags do
         wsdl_data xml, result
       end
+    end
   end
 end
